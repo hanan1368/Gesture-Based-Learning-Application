@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+
+  <div class="login-page-shell">
+
+    <!-- Back Button -->
+    <button class="back-btn login-back-btn" onclick="location.href='/'">
+      <span>←</span>
+    </button>
+
+    <!-- Title (will be changed by JS based on role) -->
+    <h1 id="pageTitle" class="page-title login-title-fixed">Student Login!</h1>
+
+    <div class="login-main-container">
+
+      <div class="big-login-card">
+
+        <!-- LOGIN FORM -->
+        <!-- form posts to /login (AuthController will read role hidden input) -->
+        <form id="loginForm" method="post" action="/login">
+
+          <!-- Hidden role field (set by JS) -->
+          <input type="hidden" id="roleInput" name="role" value="STUDENT">
+
+          <label class="login-card-label" for="usernameInput">Username</label>
+          <input 
+            id="usernameInput" 
+            name="username" 
+            class="login-field" 
+            type="text" 
+            placeholder="Enter username"
+            required 
+          />
+
+          <label class="login-card-label" for="passwordInput">Password</label>
+          <input 
+            id="passwordInput" 
+            name="password" 
+            class="login-field" 
+            type="password" 
+            placeholder="Enter password"
+            required 
+          />
+
+          <!-- Error Message Display (Thymeleaf variable if present) -->
+          <div style="color: red; text-align: center; margin-top: 10px;">
+            <span th:text="${error}"></span>
+          </div>
+
+          <div class="fixed-login-btn-wrapper" style="display:flex; gap:12px; justify-content:center; align-items:center; margin-top:20px;">
+            <button class="btn login-btn" type="submit">Login</button>
+
+            <!-- Sign up button -->
+            <a id="signupLink" class="btn login-btn" 
+               href="/register"
+               style="text-decoration:none;">
+              Sign up
+            </a>
+          </div>
+
+        </form>
+        <!-- FORM END -->
+
+      </div>
+
+      <div class="login-illustration-big">
+        <!-- illustration image will be set by JS based on role -->
+        <img id="illustrationImg" src="/assets/student-login-illustration.png" alt="Login Illustration">
+      </div>
+
+    </div>
+  </div>
+
+<script>
+/*
+  Role detection + UI tweaks.
+  Priority:
+   1) ?role=student|parent|admin
+   2) Try to infer from document.referrer or pathname
+   3) default = student
+*/
+
+(function(){
+  function getQueryParam(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+  }
+
+  function inferRoleFromReferrerOrPath() {
+    try {
+      const ref = document.referrer || "";
+      const path = window.location.pathname || "";
+      const combined = (ref + " " + path).toLowerCase();
+      if (combined.includes("parent")) return "PARENT";
+      if (combined.includes("admin")) return "ADMIN";
+      if (combined.includes("student")) return "STUDENT";
+    } catch (e) {}
+    return null;
+  }
+
+  function applyRole(role) {
+    role = (role || "").toUpperCase();
+    if (!role) role = "STUDENT";
+
+    const pageTitle = document.getElementById("pageTitle");
+    const img = document.getElementById("illustrationImg");
+    const roleInput = document.getElementById("roleInput");
+    const signupLink = document.getElementById("signupLink");
+
+    roleInput.value = role;
+
+    // title + image per role
+    if (role === "PARENT") {
+      pageTitle.innerText = "Parent Login!";
+      img.src = "/assets/parent-login-illustration.png";
+      signupLink.href = "/register?role=parent";
+      signupLink.style.display = "inline-block";
+    } 
+    else if (role === "ADMIN") {
+      pageTitle.innerText = "Admin Login!";
+      img.src = "/assets/admin-login-illustration.png";
+
+      /* SIGNUP REMOVED FOR ADMIN */
+      signupLink.style.display = "none";
+    } 
+    else {
+      pageTitle.innerText = "Student Login!";
+      img.src = "/assets/student-login-illustration.png";
+      signupLink.href = "/register?role=student";
+      signupLink.style.display = "inline-block";
+    }
+
+    signupLink.classList.add("login-btn");
+  }
+
+  // detect role
+  let role = getQueryParam("role");
+  if (role) {
+    applyRole(role);
+    return;
+  }
+
+  // try referrer/path inference
+  const inferred = inferRoleFromReferrerOrPath();
+  if (inferred) {
+    applyRole(inferred);
+    return;
+  }
+
+  // default
+  applyRole("STUDENT");
+})();
+</script>
+
+</body>
+</html>

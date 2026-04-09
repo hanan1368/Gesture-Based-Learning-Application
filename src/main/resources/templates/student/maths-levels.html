@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Maths Levels</title>
+<link rel="stylesheet" href="/css/style.css">
+<style>
+body{background:#a6ddeb;}
+.levels-shell{max-width:1200px;margin:60px auto;text-align:center;}
+.levels-grid{display:flex;justify-content:space-between;gap:60px;margin-top:40px;}
+.level-card{background:#fff;border-radius:28px;padding:30px 40px;width:260px;}
+.level-card img{width:200px;}
+.level-btn{margin-top:18px;background:#9b7f93;color:#000;border-radius:30px;padding:10px 30px;border:none;font-size:18px;cursor:pointer;}
+</style>
+</head>
+
+<body>
+<button class="back-btn lesson-back" onclick="location.href='/student/courses'"><span>←</span></button>
+
+<div class="levels-shell">
+<h1 class="lesson-title">Levels of proficiency</h1>
+
+<div class="levels-grid">
+  <div class="level-card">
+    <img src="/assets/level-basic.png">
+    <button class="level-btn" onclick="location.href='/student/maths-lesson'">Basic Level</button>
+  </div>
+
+  <div class="level-card">
+    <img src="/assets/level-medium.png">
+    <button class="level-btn">Medium Level</button>
+  </div>
+
+  <div class="level-card">
+    <img src="/assets/level-hard.png">
+    <button class="level-btn">Hard Level</button>
+  </div>
+</div>
+</div>
+</body>
+</html>

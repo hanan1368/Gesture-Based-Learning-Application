@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Parent Feedback</title>
+
+<style>
+
+body{
+margin:0;
+background:#f6cfd4;
+font-family:"Cascadia Mono", monospace;
+}
+
+/* Back Button */
+
+.back-btn{
+position:fixed;
+top:20px;
+left:20px;
+width:44px;
+height:44px;
+border-radius:50%;
+background:#6acb71;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+z-index:10;
+color:white;
+font-size:22px;
+text-decoration:none;
+}
+
+/* Container */
+
+.container{
+max-width:900px;
+margin:auto;
+padding:90px 20px;
+}
+
+/* Title */
+
+h1{
+text-align:center;
+margin-bottom:40px;
+}
+
+/* Feedback Card */
+
+.feedback-card{
+background:#fdeee9;
+padding:25px;
+border-radius:25px;
+margin-bottom:20px;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Parent name */
+
+.parent-name{
+font-size:18px;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+/* Message */
+
+.feedback-message{
+font-size:16px;
+margin-bottom:10px;
+}
+
+/* Date */
+
+.feedback-date{
+font-size:12px;
+opacity:0.6;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="/admin/dashboard" class="back-btn">←</a>
+
+<div class="container">
+
+<h1>Parent Feedback</h1>
+
+<div th:if="${#lists.isEmpty(feedbackList)}">
+
+<p style="text-align:center;">
+No feedback submitted yet.
+</p>
+
+</div>
+
+<div th:each="f : ${feedbackList}" class="feedback-card">
+
+<div class="parent-name"
+th:text="${f.parentName}">
+Parent Name
+</div>
+
+<div class="feedback-message"
+th:text="${f.message}">
+Feedback message
+</div>
+
+<div class="feedback-date"
+th:text="${f.createdAt}">
+Date
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

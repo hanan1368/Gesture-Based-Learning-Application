@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Student Dashboard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/lessons.css">
+
+<style>
+
+/* PROFILE */
+
+.profile-container{
+position:fixed;
+top:20px;
+right:25px;
+display:flex;
+align-items:center;
+gap:8px;
+cursor:pointer;
+}
+
+.profile-name{
+font-weight:bold;
+}
+
+.profile-icon{
+width:40px;
+height:40px;
+border-radius:50%;
+background:#c2527a;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.profile-icon svg{
+width:20px;
+height:20px;
+fill:white;
+}
+
+/* PROFILE POPUP */
+
+.profile-popup{
+position:fixed;
+top:70px;
+right:25px;
+background:white;
+border-radius:12px;
+padding:15px;
+width:150px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+display:none;
+z-index:1000;
+}
+
+.popup-username{
+font-weight:bold;
+margin-bottom:10px;
+text-align:center;
+}
+
+.logout-btn{
+display:block;
+text-align:center;
+background:#c2527a;
+color:white;
+padding:8px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* ANNOUNCEMENT BAR */
+
+.announcement-bar{
+position:fixed;
+top:15px;
+left:50%;
+transform:translateX(-50%);
+background:#c2527a;
+color:white;
+padding:12px 40px;
+border-radius:40px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* ANNOUNCEMENT DROPDOWN */
+
+.announcement-dropdown{
+position:fixed;
+top:70px;
+left:50%;
+transform:translateX(-50%);
+background:white;
+border-radius:15px;
+padding:15px;
+width:260px;
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
+display:none;
+z-index:1000;
+}
+
+.announcement-item{
+margin-bottom:10px;
+font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<button class="back-btn dashboard-back-btn" onclick="location.href='/'">
+<span>←</span>
+</button>
+
+<!-- ANNOUNCEMENT BAR -->
+
+<div class="announcement-bar" onclick="toggleAnnouncements()">
+Announcements
+</div>
+
+<div class="announcement-dropdown" id="announcementDropdown">
+
+<div th:each="a : ${announcements}" class="announcement-item">
+<strong th:text="${a.title}">Title</strong>
+<p th:text="${a.message}">Message</p>
+</div>
+
+</div>
+
+<!-- PROFILE -->
+
+<div class="profile-container" onclick="toggleProfileMenu()">
+
+<span class="profile-name" th:text="${username}">student_id</span>
+
+<div class="profile-icon">
+<svg viewBox="0 0 24 24">
+<path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+</svg>
+</div>
+
+</div>
+
+<div class="profile-popup" id="profilePopup">
+
+<div class="popup-username" th:text="${username}">username</div>
+
+<a href="/logout" class="logout-btn">Logout</a>
+
+</div>
+
+<div class="dashboard-wrapper">
+
+<div class="dashboard-left">
+<img src="/assets/student-dashboard-illustration.png">
+</div>
+
+<div class="dashboard-right">
+
+<h1 class="dashboard-title">Welcome Back!</h1>
+
+<button class="btn dash-btn" onclick="location.href='/student/courses'">
+Go to Courses
+</button>
+
+<button class="btn dash-btn" onclick="location.href='/student/attendance'">
+Check Attendance
+</button>
+
+<button class="btn dash-btn" onclick="location.href='/student/progress'">
+Check Progress
+</button>
+
+<button class="btn dash-btn" onclick="location.href='/student/rewards'">
+Check Rewards
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function toggleAnnouncements(){
+
+const box=document.getElementById("announcementDropdown");
+
+box.style.display = box.style.display === "block" ? "none" : "block";
+
+}
+
+function toggleProfileMenu(){
+
+const popup=document.getElementById("profilePopup");
+
+popup.style.display = popup.style.display === "block" ? "none" : "block";
+
+}
+
+window.onclick=function(event){
+
+if(!event.target.closest('.announcement-bar')){
+document.getElementById("announcementDropdown").style.display="none";
+}
+
+if(!event.target.closest('.profile-container')){
+document.getElementById("profilePopup").style.display="none";
+}
+
+}
+
+</script>
+
+</body>
+</html>

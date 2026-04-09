@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+<title>Daily Attendance Reports</title>
+
+<link rel="stylesheet" href="/css/style.css">
+
+<style>
+
+body{
+margin:0;
+background:#f8cfd4;
+}
+
+.page{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding-top:40px;
+}
+
+.back-btn{
+position:fixed;
+top:20px;
+left:20px;
+width:44px;
+height:44px;
+border-radius:50%;
+background:#6bd28c;
+color:#fff;
+font-size:22px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-decoration:none;
+}
+
+h1{
+font-size:38px;
+margin:20px 0 40px;
+}
+
+.calendar-wrapper{
+margin-top:40px;
+display:flex;
+justify-content:center;
+width:100%;
+}
+
+.calendar-card{
+width:900px;
+background:#fde9e4;
+border-radius:60px;
+padding:120px 60px 60px;
+position:relative;
+}
+
+.calendar-header{
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:130px;
+background:#e8162f;
+border-top-left-radius:60px;
+border-top-right-radius:60px;
+}
+
+.calendar{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:6px;
+background:#cfd9e8;
+padding:6px;
+border-radius:12px;
+}
+
+.day{
+background:white;
+padding:18px 8px;
+font-size:15px;
+border-radius:4px;
+text-align:center;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a class="back-btn" href="/parent/dashboard">←</a>
+
+<div class="page">
+
+<h1>Daily Attendance Reports</h1>
+
+<div class="calendar-wrapper">
+
+<div class="calendar-card">
+
+<div class="calendar-header"></div>
+
+<div class="calendar" id="calendar"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- POPUP -->
+
+<div id="popup" style="
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#ffeef5;
+padding:25px;
+border-radius:20px;
+border:2px solid black;
+width:260px;
+text-align:left;
+">
+
+<div id="popupContent"></div>
+
+<br>
+
+<button onclick="closePopup()">Close</button>
+
+</div>
+
+<script>
+
+const calendar=document.getElementById("calendar");
+
+for(let i=1;i<=35;i++){
+
+const box=document.createElement("div");
+
+box.className="day";
+
+box.innerText="Day"+i;
+
+box.onclick=()=>loadDay(i);
+
+calendar.appendChild(box);
+
+}
+
+function loadDay(day){
+
+fetch(`/parent/attendance/details/Day ${day}`)
+.then(res=>res.json())
+.then(data=>{
+
+document.getElementById("popupContent").innerHTML=`
+
+<strong>Day ${day}</strong>
+
+<br><br>
+
+📅 Date Participated: ${data.date}
+
+<br>
+
+⏱ Minutes Logged: ${data.minutes}
+
+<br>
+
+❓ Questions Completed: ${data.questions}
+
+<br>
+
+📘 Lesson Completed: ${data.lessonCompleted ? "Yes" : "No"}
+
+`;
+
+document.getElementById("popup").style.display="block";
+
+})
+.catch(()=>{
+
+document.getElementById("popupContent").innerHTML="No attendance data";
+
+document.getElementById("popup").style.display="block";
+
+});
+
+}
+
+function closePopup(){
+
+document.getElementById("popup").style.display="none";
+
+}
+
+</script>
+
+</body>
+</html>

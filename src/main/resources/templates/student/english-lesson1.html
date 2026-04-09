@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>English Lesson 1</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/lessons.css">
+
+  <style>
+    /* ----- FIXED PAGE LAYOUT ----- */
+
+    .lesson-shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 20px;
+    }
+
+    /* Back button */
+    .back-btn {
+      position: fixed !important;
+      top: 20px !important;
+      left: 20px !important;
+      z-index: 20;
+    }
+
+    /* Move gesture box more left */
+    .lesson-main {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 40px;
+    }
+
+    /* Gesture box  */
+    .gesture-box {
+      width: 360px;
+    }
+
+    /* Question title  */
+    #questionTitle {
+      margin-top: 0px;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    /* option buttons */
+    #optionsBox {
+      margin-top: 25px;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .option-btn {
+      background: #ffeae6;
+      padding: 12px 28px;
+      border-radius: 30px;
+      border: 1px solid #000;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .lesson-image {
+      width: 380px;
+      margin-top: 10px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="app-shell lesson-shell">
+
+   <button class="back-btn lesson-back" onclick="location.href='/student/english-lesson'">
+
+      <span>←</span>
+    </button>
+
+    <h1 class="page-title lesson-page-title">Lesson 1 — Basic English</h1>
+
+    <div class="lesson-main">
+
+      <!-- LEFT SIDE (Gesture Box) -->
+      <div class="lesson-left gesture-box">
+        <h3 class="lesson-section-title">Gesture Answer Mode</h3>
+
+        <video id="gestureCam" width="280" height="220" autoplay muted></video>
+        <p id="gestureOutput" class="gesture-text">Detected Fingers: -</p>
+
+        <div class="lesson-gesture-buttons">
+          <button class="btn" onclick="startGestureCapture()">Start Camera</button>
+          <button class="btn" onclick="startAnswerCountdown()">Answer using Gesture</button>
+        </div>
+
+        <p id="timerDisplay" class="gesture-text">Time: -</p>
+        <p id="answerResult" class="gesture-result"></p>
+      </div>
+
+      <!-- RIGHT SIDE (Question + Image + Options) -->
+      <div class="lesson-right" style="text-align:center;">
+        
+        <h1 id="questionTitle"></h1>
+
+        <img id="lessonImage" class="lesson-image" alt="English Question">
+
+        <div id="optionsBox">
+          
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+ 
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
+
+  <script src="/js/gesture.js"></script>
+  <script src="/js/english-lessons.js"></script>
+
+</body>
+</html>

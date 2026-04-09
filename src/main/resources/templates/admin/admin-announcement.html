@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Admin Announcements</title>
+
+<style>
+
+@font-face {
+font-family:"Cascadia Mono";
+src:local("Cascadia Mono"),
+local("CascadiaMono"),
+url("/fonts/CascadiaMono-Regular.woff2") format("woff2");
+}
+
+body{
+margin:0;
+background:#f6cfd4;
+font-family:"Cascadia Mono", monospace;
+}
+
+/* Back Button */
+
+.back-btn{
+position:fixed;
+top:20px;
+left:20px;
+width:45px;
+height:45px;
+border-radius:50%;
+background:#6acb71;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+}
+
+.back-btn span{
+color:white;
+font-size:22px;
+}
+
+/* Page container */
+
+.container{
+max-width:900px;
+margin:auto;
+padding:90px 30px;
+}
+
+/* Title */
+
+h1{
+text-align:center;
+margin-bottom:40px;
+}
+
+/* Card */
+
+.card{
+background:#fdeee9;
+padding:30px;
+border-radius:25px;
+box-shadow:0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* Inputs */
+
+label{
+display:block;
+margin-bottom:5px;
+}
+
+input, textarea{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #ccc;
+margin-bottom:20px;
+font-family:"Cascadia Mono", monospace;
+}
+
+/* Button */
+
+button{
+background:#7b6773;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:20px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#66545f;
+}
+
+/* Announcement list */
+
+.list{
+margin-top:40px;
+}
+
+.item{
+background:white;
+padding:15px;
+border-radius:12px;
+margin-bottom:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Back button -->
+
+<div class="back-btn" onclick="location.href='/admin/dashboard'">
+<span>←</span>
+</div>
+
+<div class="container">
+
+<h1>Admin Announcements</h1>
+
+<div class="card">
+
+<!-- FIXED FORM (CONNECTED TO CONTROLLER) -->
+<form action="/admin/post-announcement" method="post">
+
+<label>Announcement Title</label>
+<input type="text" name="title" placeholder="Enter title" required>
+
+<label>Message</label>
+<textarea name="message" rows="4" placeholder="Enter announcement" required></textarea>
+
+<button type="submit">Post Announcement</button>
+
+</form>
+
+</div>
+
+<div class="list">
+
+<h2>Recent Announcements</h2>
+
+<!-- DYNAMIC ANNOUNCEMENTS FROM DATABASE -->
+<div class="item" th:each="a : ${announcements}">
+<strong th:text="${a.title}">Title</strong>
+<p th:text="${a.message}">Message</p>
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

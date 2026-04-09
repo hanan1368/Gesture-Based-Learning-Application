@@ -1,0 +1,10 @@
+package model;
+
+public class AttendanceRecord {
+    public int id;
+    public int userId;
+    public String day;
+    public int minutesLogged;
+    public int questionsCompleted;
+    public boolean lessonCompleted;
+}

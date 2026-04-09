@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Maths Lesson 1</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/lessons.css">
+
+  <style>
+    html, body{
+  background:#a6ddeb !important;
+}
+    .lesson-shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 20px;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 20;
+    }
+
+    .lesson-main {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;   /* ✅ vertical centering */
+  min-height: calc(100vh - 140px);
+}
+    .gesture-box {
+      width: 360px;
+    }
+
+    .equation-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 20px;
+      font-size: 48px;
+      font-weight: bold;
+    }
+
+    .equation-img {
+      max-width: 140px;
+    }
+
+    #optionsBox {
+      margin-top: 30px;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .option-btn {
+      background: #e6f2ff;
+      padding: 14px 26px;
+      border-radius: 40px;
+      border: 1px solid #000;
+      cursor: pointer;
+    }
+
+    .option-img {
+      max-width: 90px;
+    }
+    .lesson-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* ✅ vertical center inside */
+  align-items: center;
+  min-height: 420px;
+}
+  </style>
+</head>
+
+<body>
+  
+
+
+<div class="app-shell lesson-shell">
+
+  <button class="back-btn lesson-back" onclick="location.href='/student/maths-levels'">
+    <span>←</span>
+  </button>
+
+  <h1 class="page-title lesson-page-title">Lesson 1 — Basic Maths</h1>
+
+  <div class="lesson-main">
+
+    <!-- LEFT -->
+    <div class="lesson-left gesture-box">
+      <h3 class="lesson-section-title">Gesture Answer Mode</h3>
+
+      <video id="gestureCam" width="280" height="220" autoplay muted></video>
+      <p id="gestureOutput" class="gesture-text">Detected Fingers: -</p>
+
+      <div class="lesson-gesture-buttons">
+        <button class="btn" onclick="startGestureCapture()">Start Camera</button>
+        <button class="btn" onclick="startAnswerCountdown()">Answer using Gesture</button>
+      </div>
+
+      <p id="timerDisplay" class="gesture-text">Time: -</p>
+      <p id="answerResult" class="gesture-result"></p>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="lesson-right" style="text-align:center;">
+      <div id="equationBox"></div>
+      <div id="optionsBox"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
+
+<script src="/js/gesture.js"></script>
+<script src="/js/maths-lessons.js"></script>
+</body>
+</html>

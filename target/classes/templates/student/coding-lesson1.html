@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lesson 1 — Basic Coding</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/lessons.css">
+
+<style>
+/* PAGE BACKGROUND (this page only) */
+html, body{
+  background:#cfa0ff !important;
+}
+
+/* MAIN LAYOUT */
+.lesson-shell{max-width:1200px;margin:0 auto;padding-top:20px}
+.app-shell.lesson-shell{background:#cfa0ff !important}
+
+.back-btn{position:fixed;top:20px;left:20px;z-index:20}
+
+.lesson-main{
+  display:flex;
+  gap:40px;
+  justify-content:center;
+  align-items:flex-start;
+  margin-top:40px
+}
+
+/* LEFT PANEL */
+.gesture-box{
+  width:360px;
+  background:#ffeae6;
+  padding:20px;
+  border-radius:30px
+}
+
+/* OPTIONS */
+#optionsBox{
+  margin-top:85px;
+  display:flex;
+  gap:30px;
+  justify-content:center
+}
+
+.option-box{
+  background:#ffeae6;
+  border:1px solid #000;
+  border-radius:30px;
+  padding:12px 26px;
+  display:flex;
+  gap:10px;
+  align-items:center
+}
+
+/* QUESTION ROW */
+.pattern-row{
+  display:flex;
+  gap:26px;
+  justify-content:center;
+  margin-top:30px;
+  margin-left:-30px
+}
+
+/* IMAGES */
+.pattern-img{width:90px}
+.option-img{width:45px}
+
+/* Sunglasses size fix */
+.pattern-img[src*="sunglasses"]{width:100px}
+.option-img[src*="sunglasses"]{width:35px}
+
+/* SHAPES */
+.shape{width:90px;height:90px}
+
+.star{
+  background:#2aa7df;
+  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)
+}
+
+.circle{background:#f4c400;border-radius:50%}
+
+.tri{
+  width:90px;
+  height:90px;
+  background:red;
+  clip-path:polygon(50% 0%, 0% 100%, 100% 100%)
+}
+
+.sq{background:orange}
+.dia{background:#5bbf1a;transform:rotate(45deg)}
+.pen{background:#a45a14;clip-path:polygon(50% 0%,100% 38%,81% 100%,19% 100%,0% 38%)}
+.hex{background:#6b0000;clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%)}
+.rect{width:90px;height:45px;background:#ffb52c}
+.oct{background:#ffcc99;clip-path:polygon(30% 0%,70% 0%,100% 30%,100% 70%,70% 100%,30% 100%,0% 70%,0% 30%)}
+
+/* HALF CIRCLES (QUESTION) */
+.red{
+  width:45px;
+  height:90px;
+  background:#ff4d4d;
+  border-radius:90px 0 0 90px
+}
+
+.gray{
+  width:90px;
+  height:45px;
+  background:#555;
+  border-radius:90px 90px 0 0
+}
+
+.orange{
+  width:45px;
+  height:90px;
+  background:#ef7d1a;
+  border-radius:0 90px 90px 0
+}
+
+/* OPTION SHAPES */
+.small{width:45px;height:45px}
+
+/* Small TRUE half-circles in options only */
+.option-box .red.small{
+  width:22px;
+  height:45px;
+  border-radius:45px 0 0 45px
+}
+
+.option-box .orange.small{
+  width:22px;
+  height:45px;
+  border-radius:0 45px 45px 0
+}
+
+.option-box .gray.small{
+  width:45px;
+  height:22px;
+  border-radius:45px 45px 0 0
+}
+
+.opt-rect-fix{
+  width:45px;
+  height:22px;
+}
+
+/* Center rectangle vertically in question row */
+.pattern-row .rect{
+  margin-top:22px;
+}
+
+/* FORCE rectangle shape in options (override .small) */
+.option-box .rect.small{
+  width:45px !important;
+  height:22px !important;
+  border-radius:0 !important;
+}
+
+/* Center black half-circle vertically in QUESTION row */
+.pattern-row .gray{
+  margin-top:22px;
+}
+
+
+</style>
+</head>
+
+<body>
+<div class="app-shell lesson-shell">
+
+<button class="back-btn" onclick="location.href='/student/coding-lesson'">←</button>
+
+<h1 class="page-title lesson-page-title">Lesson 1 — Basic Coding</h1>
+
+<div class="lesson-main">
+
+  <div class="lesson-left gesture-box">
+    <h3 class="lesson-section-title">Gesture Answer Mode</h3>
+
+    <video id="gestureCam" width="280" height="220" autoplay muted></video>
+    <p id="gestureOutput">Detected Fingers: -</p>
+
+    <div class="lesson-gesture-buttons">
+      <button class="btn" onclick="startGestureCapture()">Start Camera</button>
+      <button class="btn" onclick="startAnswerCountdown()">Answer using Gesture</button>
+    </div>
+
+    <p id="timerDisplay">Time: -</p>
+    <p id="answerResult"></p>
+  </div>
+
+  <div class="lesson-right" style="text-align:center">
+    <h1 id="questionTitle">
+      What pattern will come next ?
+      <span id="blankDash"></span>
+    </h1>
+    <div id="lessonImage"></div>
+    <div id="optionsBox"></div>
+  </div>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
+
+<script src="/js/gesture.js"></script>
+<script src="/js/coding-lessons.js"></script>
+</body>
+</html>

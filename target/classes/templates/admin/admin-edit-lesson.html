@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Edit Users</title>
+
+<style>
+
+@font-face {
+font-family:"Cascadia Mono";
+src:local("Cascadia Mono"),
+local("CascadiaMono"),
+url("/fonts/CascadiaMono-Regular.woff2") format("woff2");
+}
+
+body{
+margin:0;
+background:#f6cfd4;
+font-family:"Cascadia Mono", monospace;
+}
+
+.back-btn{
+position:fixed;
+top:20px;
+left:20px;
+width:45px;
+height:45px;
+border-radius:50%;
+background:#6acb71;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+}
+
+.back-btn span{
+color:white;
+font-size:22px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:90px 30px;
+}
+
+h1{
+text-align:center;
+margin-bottom:40px;
+}
+
+.card{
+background:#fdeee9;
+padding:30px;
+border-radius:25px;
+box-shadow:0 15px 30px rgba(0,0,0,0.1);
+}
+
+.user-row{
+background:white;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+label{
+display:block;
+margin-bottom:6px;
+}
+
+input,select{
+width:100%;
+padding:10px;
+border-radius:10px;
+border:1px solid #ccc;
+margin-bottom:15px;
+font-family:"Cascadia Mono", monospace;
+}
+
+button{
+background:#7b6773;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:20px;
+cursor:pointer;
+}
+
+button:hover{
+background:#66545f;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="back-btn" onclick="location.href='/admin/dashboard'">
+<span>←</span>
+</div>
+
+<div class="container">
+
+<h1>Edit / Update Users</h1>
+
+<div class="card">
+
+<div class="user-row" th:each="u : ${users}">
+
+<form action="/admin/update-user" method="post">
+
+<input type="hidden" name="id" th:value="${u.id}">
+
+<label>Username</label>
+<input type="text" name="username" th:value="${u.username}">
+
+<label>Password</label>
+<input type="text" name="password" th:value="${u.password}">
+
+<label>Role</label>
+
+<select name="role">
+
+<option value="STUDENT"
+th:selected="${u.role.name() == 'STUDENT'}">STUDENT</option>
+
+<option value="PARENT"
+th:selected="${u.role.name() == 'PARENT'}">PARENT</option>
+
+<option value="ADMIN"
+th:selected="${u.role.name() == 'ADMIN'}">ADMIN</option>
+
+</select>
+
+<button type="submit">Update User</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

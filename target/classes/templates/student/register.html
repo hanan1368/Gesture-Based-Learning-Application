@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Sign up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+
+  <div class="login-page-shell">
+
+    <!-- Back button returns to login -->
+    <button class="back-btn login-back-btn" onclick="location.href='/login'">
+      <span>←</span>
+    </button>
+
+    <h1 class="page-title login-title-fixed">Create Account</h1>
+
+    <div class="login-main-container">
+
+      <div class="big-login-card">
+
+        <!-- SIGNUP FORM -->
+        <form id="registerForm" method="post" action="/register">
+
+          <label class="login-card-label" for="usernameInput">Username</label>
+          <input 
+            id="usernameInput" 
+            name="username" 
+            class="login-field" 
+            type="text" 
+            placeholder="Enter username"
+            required 
+          />
+
+          <label class="login-card-label" for="passwordInput">Password</label>
+          <input 
+            id="passwordInput" 
+            name="password" 
+            class="login-field" 
+            type="password" 
+            placeholder="Enter password"
+            required 
+          />
+
+          <label class="login-card-label" for="roleSelect">Role</label>
+          <select id="roleSelect" name="role" class="login-field" required>
+            <option value="STUDENT">Student</option>
+            <option value="PARENT">Parent</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+
+          <div class="fixed-login-btn-wrapper" style="margin-top:18px;">
+            <button class="btn login-btn" type="submit">Sign up</button>
+          </div>
+
+        </form>
+        <!-- FORM END -->
+
+      </div>
+
+      <div class="login-illustration-big">
+        <img src="/assets/student-login-illustration.png" alt="Illustration">
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

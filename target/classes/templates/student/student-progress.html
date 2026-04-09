@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Your Progress</title>
+
+<style>
+body{
+  margin:0;
+  font-family:"Comic Sans MS", cursive, sans-serif;
+  background:#f7cfd4;
+}
+
+.page-title{
+  text-align:center;
+  font-size:42px;
+  margin:40px 0;
+}
+.back-btn {
+  position: fixed;        /* stick to viewport */
+  top: 20px;
+  left: 20px;
+  width: 48px;
+  height: 48px;
+  background: #6fd58c;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;          /* stay above everything */
+}
+
+.progress-card{
+  width:75%;
+  margin:0 auto;
+  background:#fdebe5;
+  border-radius:40px;
+  padding:50px 60px;
+}
+
+.progress-row{
+  display:flex;
+  align-items:center;
+  margin-bottom:40px;
+}
+
+.subject{
+  width:260px;
+  font-size:28px;
+}
+
+.bar{
+  flex:1;
+  height:58px;
+  border-radius:40px;
+  position:relative;
+  overflow:hidden;
+}
+
+.english{ background:#2fb7c6; }
+.coding{ background:#4b3b8f; }
+.maths{ background:#c41f4e; }
+
+.bar-inner{
+  position:absolute;
+  top:10px;
+  left:10px;
+  height:38px;
+  width:0%;
+  background:#fff;
+  border-radius:30px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding-right:20px;
+  font-size:20px;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+<button class="back-btn" onclick="location.href='/student/dashboard'">←</button>
+<h1 class="page-title">Your Progress</h1>
+
+<div class="progress-card">
+
+  <div class="progress-row">
+    <div class="subject">Basic English</div>
+    <div class="bar english">
+      <div class="bar-inner" id="englishBar">0/100</div>
+    </div>
+  </div>
+
+  <div class="progress-row">
+    <div class="subject">Basic Coding</div>
+    <div class="bar coding">
+      <div class="bar-inner" id="codingBar">0/100</div>
+    </div>
+  </div>
+
+  <div class="progress-row">
+    <div class="subject">Basic Maths</div>
+    <div class="bar maths">
+      <div class="bar-inner" id="mathsBar">0/100</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+fetch("/student/progress/data")
+  .then(res => res.json())
+  .then(data => {
+
+    if (data.ENGLISH !== undefined) {
+      englishBar.style.width = data.ENGLISH + "%";
+      englishBar.textContent = data.ENGLISH + "/100";
+    }
+
+    if (data.CODING !== undefined) {
+      codingBar.style.width = data.CODING + "%";
+      codingBar.textContent = data.CODING + "/100";
+    }
+
+    if (data.MATHS !== undefined) {
+      mathsBar.style.width = data.MATHS + "%";
+      mathsBar.textContent = data.MATHS + "/100";
+    }
+  });
+</script>
+
+</body>
+</html>

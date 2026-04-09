@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Basic Coding Lessons</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/lessons.css">
+
+  <style>
+    body {
+      align-items: flex-start;
+      padding-top: 40px;
+      min-height: 100vh;
+      background:#d699ff;
+    }
+
+    .lesson-page-shell {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .lesson-title {
+      text-align: center;
+      font-size: 48px;
+      margin-bottom: 30px;
+    }
+
+    .lesson-card {
+      background: #ffefe6;
+      border-radius: 40px;
+      width: 1000px;
+      height: 360px;
+      margin-left: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .arrow-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 40px 40px;
+      width: 100%;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .arrow-btn {
+      width: 150px;
+      position: relative;
+      border: none;
+      background: none;
+      padding: 0;
+    }
+
+    .arrow-btn img {
+      width: 150px;
+      display: block;
+    }
+
+    .badge {
+      position: absolute;
+      top: 50%;
+      left: 29%;
+      transform: translate(-50%, -50%) translateX(-6px);
+      font-size: 22px;
+      font-weight: bold;
+      color: #3a144b;
+      pointer-events: none;
+    }
+
+    .kid-illustration {
+      position: fixed;
+      right: 40px;
+      bottom: 0;
+      width: 400px;
+      height: 450px;
+      pointer-events: none;
+    }
+
+    .back-btn.lesson-back {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      width: 40px;
+      height: 40px;
+      background: #6acb71;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+    }
+
+    .back-btn.lesson-back span {
+      color: white;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<button class="back-btn lesson-back" onclick="location.href='/student/coding-levels'">
+  <span>←</span>
+</button>
+
+<div class="lesson-page-shell">
+  <h1 class="lesson-title">Basic Coding Lessons</h1>
+
+  <div class="lesson-card">
+    <div class="arrow-grid">
+
+      <a class="arrow-btn" href="/student/coding-lesson1">
+        <img src="../assets/arrow-purple.png">
+        <div class="badge">1</div>
+      </a>
+
+      <div class="arrow-btn"><img src="../assets/arrow-purple.png"><div class="badge">2</div></div>
+      <div class="arrow-btn"><img src="../assets/arrow-purple.png"><div class="badge">3</div></div>
+      <div class="arrow-btn"><img src="../assets/arrow-purple.png"><div class="badge">4</div></div>
+      <div class="arrow-btn"><img src="../assets/arrow-purple.png"><div class="badge">5</div></div>
+
+      <div class="arrow-btn"><img src="../assets/arrow-purple.png"><div class="badge">6</div></div>
+      <div class="arrow-btn"><img src="../assets/arrow-purple.png"><div class="badge">7</div></div>
+      <div class="arrow-btn"><img src="../assets/arrow-purple.png"><div class="badge">8</div></div>
+      <div class="arrow-btn"><img src="../assets/arrow-purple.png"><div class="badge">9</div></div>
+      <div class="arrow-btn"><img src="../assets/arrow-purple.png"><div class="badge">10</div></div>
+
+    </div>
+  </div>
+</div>
+
+<img src="../assets/coding-lessons-kid.png" class="kid-illustration">
+
+</body>
+</html>

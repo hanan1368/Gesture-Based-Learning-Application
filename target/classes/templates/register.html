@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Register</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="login-page-shell">
+
+    <button class="back-btn login-back-btn" onclick="location.href='/'">
+      <span>←</span>
+    </button>
+
+    <h1 id="regTitle" class="page-title login-title-fixed">Register</h1>
+
+    <div class="login-main-container">
+
+      <div class="big-login-card">
+
+        <form method="post" action="/register">
+
+          <input type="hidden" name="role" id="regRoleInput" value="STUDENT">
+
+          <label class="login-card-label">Username</label>
+          <input name="username" class="login-field"
+                 type="text" placeholder="Enter username" required>
+
+          <label class="login-card-label">Password</label>
+          <input name="password" class="login-field"
+                 type="password" placeholder="Enter password" required>
+
+          <!-- CHILD STUDENT USERNAME (PARENT ONLY) -->
+          <div id="studentUsernameBlock" style="display:none;">
+            <label class="login-card-label">
+              Child Student Username
+            </label>
+            <input
+              name="studentUsername"
+              class="login-field"
+              type="text"
+              placeholder="Enter your child's username"
+            />
+          </div>
+
+          <div style="color:red; text-align:center; margin-top:10px;">
+            <span th:text="${error}"></span>
+          </div>
+
+          <div class="fixed-login-btn-wrapper"
+               style="margin-top:22px; text-align:center;">
+            <button class="btn login-btn" type="submit">Register</button>
+          </div>
+
+        </form>
+
+      </div>
+
+      <div class="login-illustration-big">
+        <img id="regIllustrationImg"
+             src="/assets/student-login-illustration.png"
+             alt="Register Illustration">
+      </div>
+
+    </div>
+  </div>
+
+<script>
+(function(){
+  function getRole() {
+    return new URLSearchParams(location.search).get("role");
+  }
+
+  function inferRole() {
+    const s = ((document.referrer || "") + location.pathname).toLowerCase();
+    if (s.includes("parent")) return "PARENT";
+    if (s.includes("admin")) return "ADMIN";
+    return "STUDENT";
+  }
+
+  function applyRole(role) {
+    role = (role || "STUDENT").toUpperCase();
+    document.getElementById("regRoleInput").value = role;
+
+    const img = document.getElementById("regIllustrationImg");
+    const title = document.getElementById("regTitle");
+    const block = document.getElementById("studentUsernameBlock");
+
+    if (role === "PARENT") {
+      title.innerText = "Parent Register";
+      img.src = "/assets/parent-login-illustration.png";
+      block.style.display = "block";
+    } else if (role === "ADMIN") {
+      title.innerText = "Admin Register";
+      img.src = "/assets/admin-login-illustration.png";
+      block.style.display = "none";
+    } else {
+      title.innerText = "Student Register";
+      img.src = "/assets/student-login-illustration.png";
+      block.style.display = "none";
+    }
+  }
+
+  applyRole(getRole() || inferRole());
+})();
+</script>
+
+</body>
+</html>

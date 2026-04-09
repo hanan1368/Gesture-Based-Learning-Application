@@ -1,0 +1,35 @@
+/* attendance.css - 35 day grid & styles */
+.attendance-grid .days {
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:10px;
+}
+
+.attendance-grid .day {
+  background:var(--card);
+  padding:10px;
+  border-radius:10px;
+  box-shadow:var(--panel-shadow);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:56px;
+  font-weight:600;
+  color:#0f1724;
+}
+
+.attendance-grid .day.present {
+  background: linear-gradient(180deg,#dff7e0,#f7fff4);
+  border:1px solid #b9f0b1;
+}
+
+.attendance-grid .day.absent {
+  background: linear-gradient(180deg,#fff0f0,#fffdfd);
+  color:#b91c1c;
+}
+
+.attendance-legend { display:flex; gap:10px; margin-top:12px; align-items:center; }
+.attendance-legend .item { display:flex; gap:6px; align-items:center; }
+.attendance-legend .box { width:14px; height:14px; border-radius:4px; display:inline-block; }
+.attendance-legend .box.present { background:#bff0b3; }
+.attendance-legend .box.absent { background:#ffb3b3; }
